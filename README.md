@@ -3,7 +3,7 @@
 
 1.  **Clone the Repo**
 ```
-git clone https://github.com/ramki2486/movie_react
+git clone https://github.com/ramki2486/news_gatsby
 ```
 
 2.  **Navigate to folder**
