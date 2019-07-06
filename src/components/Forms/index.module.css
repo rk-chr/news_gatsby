@@ -1,0 +1,24 @@
+.forms {
+    background-color: white;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
+    margin-top: 100px;
+}
+
+.butNs {
+    padding: 10px 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.forms button {
+    margin: 60px;
+    border: none;
+    letter-spacing: 1px;
+    font-size: 22px;
+    font-family: ProximaNova,Arial,Helvetica Neue,sans-serif;
+}
+
+.forms button:hover {
+    color: orange;
+}
