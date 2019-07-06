@@ -3,10 +3,13 @@ import React from 'react';
 import styles from './index.module.css';
 import axios from '../../../axios';
 
+const token = localStorage.getItem('token');
+
 class Comments extends React.Component {
 
     state = {
-        comments: []
+        comments: [],
+        message: ''
     }
 
     componentDidMount() {
@@ -21,8 +24,64 @@ class Comments extends React.Component {
             })
     }
 
+    componentDidUpdate() {
+        axios.get('/comments')
+            .then(res => {
+                this.setState({
+                    comments: res.data.comments
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    UPvote = id => {
+        axios.post('/comments/vote', { id: id, up: 1 }, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(res => {
+                if (res.data.id !== id) {
+                    this.setState({
+                        message: 'You voted up!'
+                    })
+                } else {
+                    this.setState({
+                        message: 'You cannot down vote your own post!'
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    DOWNvote = id => {
+        axios.post('/comments/vote', { id: id, down: 1 }, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(res => {
+                if (res.data.id !== id) {
+                    this.setState({
+                        message: 'You voted down!'
+                    })
+                } else {
+                    this.setState({
+                        message: 'You cannot down vote your own post!'
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     render() {
-        const { comments } = this.state;
+        const { comments, message } = this.state;
         return (
             <div className="container">
                 <div className={styles.Comments}>
@@ -37,8 +96,8 @@ class Comments extends React.Component {
                                         </p>
                                     </div>
                                     <div className={styles.voting}>
-                                        <p><i className={`fas fa-thumbs-up ${styles.up}`}></i> {com.up.length} Upvotes</p>
-                                        <p><i className={`fas fa-thumbs-down ${styles.down}`}></i> {com.down.length} downvotes</p>
+                                        <p onClick={() => this.UPvote(com.id)}><i className={`fas fa-thumbs-up ${styles.up}`}></i> {com.up.length} Upvotes</p>
+                                        <p onClick={() => this.DOWNvote(com.id)}><i className={`fas fa-thumbs-down ${styles.down}`}></i> {com.down.length} downvotes</p>
                                     </div>
                                 </div>
                             </React.Fragment>
