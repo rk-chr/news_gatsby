@@ -3,8 +3,6 @@ import React from 'react';
 import styles from './index.module.css';
 import axios from '../../../axios';
 
-const token = localStorage.getItem('token');
-
 class Comments extends React.Component {
 
     state = {
@@ -37,6 +35,7 @@ class Comments extends React.Component {
     }
 
     UPvote = id => {
+        const token = localStorage.getItem('token');
         axios.post('/comments/vote', { id: id, up: 1 }, {
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -59,6 +58,7 @@ class Comments extends React.Component {
     }
 
     DOWNvote = id => {
+        const token = localStorage.getItem('token');
         axios.post('/comments/vote', { id: id, down: 1 }, {
             headers: {
                 'Authorization': 'Bearer ' + token
