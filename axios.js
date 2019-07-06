@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3002/'
+  baseURL: 'http://comments.bingewatch.co.in'
 });
 
 instance.interceptors.request.use(
