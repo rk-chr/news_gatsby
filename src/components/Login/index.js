@@ -2,6 +2,9 @@
 import React from 'react';
 import Input from '../Input';
 import styles from './index.module.css';
+import axios from '../../../axios';
+import { navigate } from "gatsby"
+
 
 class SignUp extends React.Component {
     state = {
@@ -9,12 +12,13 @@ class SignUp extends React.Component {
         userError: false,
         password: '',
         passwordError: false,
+        message: ''
     };
 
     handleUser = e => (e.target.value.length >= 6 && e.target.value.length <= 14
         ? this.setState({
             userError: false,
-            user: e.target.value,
+            username: e.target.value,
         })
         : this.setState({
             userError: true,
@@ -29,10 +33,37 @@ class SignUp extends React.Component {
             passwordError: true,
         }));
 
+    handleSubmit = event => {
+        event.preventDefault();
+        const { username, password, passwordError, userError } = this.state;
+        if (!passwordError && !userError) {
+            axios.post('/login', { username: `${username}`, password: `${password}` })
+                .then(res => {
+                    console.log(res);
+                    if (res.data.token) {
+                        localStorage.setItem('token', res.data.token);
+                        this.setState({
+                            message: 'Redirecting...'
+                        });
+                        navigate("/comments");
+                    } else {
+                        this.setState({
+                            message: 'Username or password wrong!'
+                        })
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.setState({
+                        message: 'Username or password wrong!'
+                    })
+                })
+        }
+    }
     render() {
-        const { username, password, userError, passwordError } = this.state;
+        const { username, password, userError, passwordError, message } = this.state;
         return (
-            <form className={styles.Login}>
+            <form className={styles.Login} onSubmit={this.handleSubmit}>
                 <Input
                     label="Username"
                     htmlFor="email"
@@ -51,9 +82,14 @@ class SignUp extends React.Component {
                     change={this.handlePassword}
                     error={passwordError ? 'Password must be 8 to 10 characters' : ''}
                 />
-                <button type="button" className="btn btn-success">
+                <button type="submit" className="btn btn-success">
                     Login
                 </button>
+                {message ? (
+                    <div className="alert alert-success" role="alert">
+                        {message}
+                    </div>
+                ) : null}
             </form>
         );
     }

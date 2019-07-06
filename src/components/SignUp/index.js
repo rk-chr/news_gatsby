@@ -2,6 +2,7 @@
 import React from 'react';
 import Input from '../Input';
 import styles from './index.module.css';
+import axios from '../../../axios';
 
 class SignUp extends React.Component {
     state = {
@@ -9,12 +10,13 @@ class SignUp extends React.Component {
         userError: false,
         password: '',
         passwordError: false,
+        message: ''
     };
 
     handleUser = e => (e.target.value.length >= 6 && e.target.value.length <= 14
         ? this.setState({
             userError: false,
-            user: e.target.value,
+            username: e.target.value,
         })
         : this.setState({
             userError: true,
@@ -29,10 +31,28 @@ class SignUp extends React.Component {
             passwordError: true,
         }));
 
+    handleSubmit = event => {
+        event.preventDefault();
+        const { username, password, passwordError, userError } = this.state;
+        if (!passwordError && !userError) {
+            axios.post('/signup', { username: `${username}`, password: `${password}` })
+                .then(res => {
+                    if (!res.data.err) {
+                        this.setState({
+                            message: res.data.msg
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    }
+
     render() {
-        const { username, password, userError, passwordError } = this.state;
+        const { username, password, userError, passwordError, message } = this.state;
         return (
-            <form className={styles.SignUp}>
+            <form className={styles.SignUp} onSubmit={this.handleSubmit}>
                 <Input
                     label="Username"
                     htmlFor="email"
@@ -51,9 +71,14 @@ class SignUp extends React.Component {
                     change={this.handlePassword}
                     error={passwordError ? 'Password must be 8 to 10 characters' : ''}
                 />
-                <button type="button" className="btn btn-success">
+                <button type="submit" className="btn btn-success">
                     SignUp
                 </button>
+                {message ? (
+                    <div className="alert alert-success" role="alert">
+                        {message}
+                    </div>
+                ) : null}
             </form>
         );
     }
