@@ -1,6 +1,6 @@
 ## 🚀 Quick start
 
-**In google form only one link i need to submit. so here is my Backend github Repo:**
+**In google form only one link option i have to submit. so here is my Backend github Repo:**
 ```
 https://github.com/ramki2486/rentomojo_backend
 
