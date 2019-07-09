@@ -2,6 +2,8 @@
 import React from 'react';
 import styles from './index.module.css';
 import axios from '../../../axios';
+import Green from '../../images/GreenT.png';
+import Red from '../../images/RedT.png';
 
 class Comments extends React.Component {
 
@@ -19,19 +21,7 @@ class Comments extends React.Component {
             })
             .catch(err => {
                 console.log(err);
-            })
-    }
-
-    componentDidUpdate() {
-        axios.get('/comments')
-            .then(res => {
-                this.setState({
-                    comments: res.data.comments
-                });
-            })
-            .catch(err => {
-                console.log(err);
-            })
+            });
     }
 
     UPvote = id => {
@@ -44,7 +34,7 @@ class Comments extends React.Component {
             .then(res => {
                 if (res.data.id !== id) {
                     this.setState({
-                        message: 'You voted up!'
+                        comments: res.data.comments
                     })
                 } else {
                     this.setState({
@@ -67,7 +57,7 @@ class Comments extends React.Component {
             .then(res => {
                 if (res.data.id !== id) {
                     this.setState({
-                        message: 'You voted down!'
+                        comments: res.data.comments
                     })
                 } else {
                     this.setState({
@@ -96,8 +86,8 @@ class Comments extends React.Component {
                                         </p>
                                     </div>
                                     <div className={styles.voting}>
-                                        <p onClick={() => this.UPvote(com.id)}><i className={`fas fa-thumbs-up ${styles.up}`}></i> {com.up.length} Upvotes</p>
-                                        <p onClick={() => this.DOWNvote(com.id)}><i className={`fas fa-thumbs-down ${styles.down}`}></i> {com.down.length} downvotes</p>
+                                        <p onClick={() => this.UPvote(com.id)}><img src={Green} alt="" />{com.up.length} Upvotes</p>
+                                        <p onClick={() => this.DOWNvote(com.id)}><img src={Red} alt="" />{com.down.length} downvotes</p>
                                     </div>
                                 </div>
                             </React.Fragment>

@@ -31,10 +31,7 @@
     margin-bottom: 8px;
 }
 
-.up {
-    color: green;
-}
-
-.down {
-    color: red;
+.voting p img {
+    width: 35px;
+    height: 23px;
 }
