@@ -4,6 +4,12 @@
 1.  **Clone the Repo**
 ```
 git clone https://github.com/ramki2486/news_gatsby
+
+```
+**In google form only one link i need to submit. so here is my Backend github Repo:**
+```
+https://github.com/ramki2486/comments
+
 ```
 
 2.  **Navigate to folder**
