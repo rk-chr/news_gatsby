@@ -1,14 +1,14 @@
 ## 🚀 Quick start
 
+**In google form only one link i need to submit. so here is my Backend github Repo:**
+```
+https://github.com/ramki2486/rentomojo_backend
+
+```
 
 1.  **Clone the Repo**
 ```
 git clone https://github.com/ramki2486/news_gatsby
-
-```
-**In google form only one link i need to submit. so here is my Backend github Repo:**
-```
-https://github.com/ramki2486/comments
 
 ```
 
