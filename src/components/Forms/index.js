@@ -9,7 +9,7 @@ class Forms extends React.Component {
     com: <SignUp />
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const token = localStorage.getItem('token');
     if (token) {
       navigate('/comments');
