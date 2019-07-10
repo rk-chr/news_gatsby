@@ -13,14 +13,11 @@ class Comments extends React.Component {
         message: ''
     }
 
-    componentWillMount() {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            navigate('/');
-        }
-    }
 
     componentDidMount() {
+        if (!localStorage.getItem('token')) {
+            navigate('/');
+        }
         axios.get('/comments')
             .then(res => {
                 this.setState({
