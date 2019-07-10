@@ -4,12 +4,20 @@ import styles from './index.module.css';
 import axios from '../../../axios';
 import Green from '../../images/GreenT.png';
 import Red from '../../images/RedT.png';
+import { navigate } from 'gatsby';
 
 class Comments extends React.Component {
 
     state = {
         comments: [],
         message: ''
+    }
+
+    componentWillMount() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/');
+        }
     }
 
     componentDidMount() {
